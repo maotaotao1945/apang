@@ -24,21 +24,20 @@
 */
 const $ = new Env();
 let message = '', subTitle = '', option = {};
-let SyncUrl ='';
 const exec = require("child_process").execSync;
 const fs = require("fs");
 const download = require("download");
 
 
 const JD_COOKIE = process.env.JD_COOKIE; //格式格式格式三遍
-
+const SyncUrl = process.env.SYNCURL; //
 const Efork = process.env.EFORK; //
 const SCKEY = process.env.SCKEY; //SEVER-酱油
 const BARK_PUSH = process.env.BARK_PUSH; //
 const PUSH_KEY = process.env.PUSH_KEY; //
 const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN; //TG通知比较好用
 const TG_USER_ID = process.env.TG_USER_ID; //
-const HELPURL = process.env.HELPURL;//朱丽娜
+ 
 //个别参数 懂的自己加
 const JOY_FEED_COUNT = process.env.JOY_FEED_COUNT; //宠汪汪🐕喂食
 const JXNCTOKENS = process.env.JXNCTOKENS; //京戏农场种子
@@ -73,11 +72,8 @@ async function changeFiele(content, cookie) {
     newContent = newContent.replace(/require\('.\/(\w+)ShareCodes.js\'\)/g, JSON.stringify(shareCodes)); 
  
     newContent =newContent.replace(/var Key = ''/, `var Key = '${cookie}'`);
-       if (!HELPURL)  
-      console.log(`木有互助码数据，请在secret中加入朱丽娜网址`);
-      else
-     newContent =newContent.replace(`https://raw.githubusercontent.com/jd1994527314/iosrule/cs/JD_TG`, `${HELPURL}` );
-    
+ 
+   
      
       await fs.writeFileSync( './temp.js', newContent, 'utf8')
     
@@ -127,23 +123,10 @@ async function start() {
         
         return;
     }
-   if (!process.env.SYNCURL) {
+   if (!SyncUrl) {
      
         return;
     }
-
-    if (process.env.SYNCURL.indexOf('http')<0)
-    {if (!process.env.GITHUB)   return;
-    
-    SyncUrl = process.env.GITHUB+process.env.SYNCURL;
-
-
- }
-else
- SyncUrl = process.env.SYNCURL; 
-
-
-    
     if (!Efork) {
      
         return;
